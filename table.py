@@ -32,3 +32,19 @@ for filename in glob.glob('html/*.html'):
             print '\n no td or tr \n \n'
 with codecs.open('schools.json','w',encoding='utf-8') as jsonfile:
     json.dump(schools, jsonfile, ensure_ascii=False, indent=2, sort_keys=True)
+
+with codecs.open('schoolsdupe.json','w',encoding='utf-8') as jsonfile:
+    output = list()
+    for s in schools:
+        for d in s['destination'].keys():
+            line = {
+                'name': s['name'],
+                'private': s['private'],
+                'county': s['county'],
+                'totalnumber': s['number'],
+                'percentage': s['percentage'],
+                'destination': d,
+                'destinationnumber': s['destination'][d]}
+            output.append(line.copy())
+    json.dump(output, jsonfile, ensure_ascii=False, indent=2,
+            sort_keys=True)
